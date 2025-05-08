@@ -6,4 +6,3 @@ google-cloud-vision
 apscheduler
 python-dotenv
 pandas
-gunicorn
