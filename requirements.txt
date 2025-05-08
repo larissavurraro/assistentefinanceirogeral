@@ -1,0 +1,8 @@
+python-telegram-bot==20.3
+google-cloud-firestore
+gspread
+google-auth
+google-cloud-vision
+apscheduler
+python-dotenv
+pandas
