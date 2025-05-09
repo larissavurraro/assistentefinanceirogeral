@@ -1,11 +1,12 @@
 import os
 import io
 from google.cloud import vision
+from utils import dump_env_json_to_file
 
 def ler_imagem(file_path):
-    client = vision.ImageAnnotatorClient.from_service_account_json(
-        os.environ['GOOGLE_CLOUD_CREDENTIALS']
-    )
+    # Garante que a credencial está salva e pega o path
+    cred_path = dump_env_json_to_file("GOOGLE_CLOUD_CREDENTIALS", "google_cloud.json")
+    client = vision.ImageAnnotatorClient.from_service_account_file(cred_path)
     with io.open(file_path, 'rb') as f:
         content = f.read()
     image = vision.Image(content=content)
