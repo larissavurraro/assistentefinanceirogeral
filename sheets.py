@@ -2,14 +2,10 @@ import os
 import gspread
 from google.oauth2.service_account import Credentials
 from datetime import datetime
+from utils import dump_env_json_to_file  # certifique-se que utils.py está disponível
 
 def get_cred():
-    cred_path = "/tmp/sa_google.json"
-    # Só cria o arquivo se não existir ainda
-    if not os.path.exists(cred_path):
-        with open(cred_path, "w") as f:
-            f.write(os.environ["GOOGLE_CLOUD_CREDENTIALS"])
-    from google.oauth2.service_account import Credentials
+    cred_path = dump_env_json_to_file("GOOGLE_CLOUD_CREDENTIALS", "sa_google.json")
     return Credentials.from_service_account_file(cred_path)
     
 def criar_planilha_usuario(telegram_id):
