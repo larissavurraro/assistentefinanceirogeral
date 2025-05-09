@@ -4,8 +4,14 @@ from google.oauth2.service_account import Credentials
 from datetime import datetime
 
 def get_cred():
-    return Credentials.from_service_account_file(os.environ['GOOGLE_CLOUD_CREDENTIALS'])
-
+    cred_path = "/tmp/sa_google.json"
+    # Só cria o arquivo se não existir ainda
+    if not os.path.exists(cred_path):
+        with open(cred_path, "w") as f:
+            f.write(os.environ["GOOGLE_CLOUD_CREDENTIALS"])
+    from google.oauth2.service_account import Credentials
+    return Credentials.from_service_account_file(cred_path)
+    
 def criar_planilha_usuario(telegram_id):
     creds = get_cred()
     client = gspread.authorize(creds)
