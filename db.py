@@ -1,5 +1,15 @@
 import os
 from google.cloud import firestore
+import firebase_admin
+from firebase_admin import credentials
+from utils import dump_env_json_to_file  # idêntico ao acima
+
+def inicializar_firebase():
+    cred_path = dump_env_json_to_file("FIREBASE_CREDENTIALS", "firebase.json")
+    cred = credentials.Certificate(cred_path)
+    # Só inicializa uma vez!
+    if not firebase_admin._apps:
+        firebase_admin.initialize_app(cred)
 
 def get_firestore():
     cred_path = os.environ["FIREBASE_CREDENTIALS"]
